@@ -11,7 +11,7 @@ module.exports = function (socket, io) {
       // データを整形して渡す
       const message = `${data.userName}さん：　${data.message}`;
 
-      io.sockets.emit('receiveMessageEvent', message);
+      socket.broadcast.emit('receiveMessageEvent', message);
 
     });
 };
