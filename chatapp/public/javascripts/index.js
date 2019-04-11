@@ -12,9 +12,6 @@ function enter() {
     if (userName === ''){
         alert("ユーザー名が入力されていません");
     }else{
-    // ユーザ名が未入力でないかチェックする
-
-
         $('form').submit();
     }
 }

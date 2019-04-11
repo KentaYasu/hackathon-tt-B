@@ -9,10 +9,10 @@ function publish() {
     // 投稿内容を送信
     socket.emit('publish',message)
 
-    return false;
+return false;
 }
 
 // サーバから受信した投稿メッセージを画面上に表示する
 socket.on('receiveMessageEvent', function (data) {
-    $('#thread').prepend('<p>' + '</p>');
+    $('#thread').prepend('<p>' + data + '</p>');
 });
