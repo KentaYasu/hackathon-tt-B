@@ -9,15 +9,9 @@ module.exports = function (socket, io) {
       }
 
       // データを整形して渡す
-      const myMessage = `あなた：　${data.message}`;
-      const otherMessage = `${data.userName}さん：　${data.message}`;
-      
+      const message = `${data.userName}さん：　${data.message}`;
 
-      // 自クライアントにreceiveMyMessageEventを通知する
-      socket.emit('receiveMyMessageEvent', myMessage);
-
-      // 他クライアントにreceiveOtherMessageEventを通知する
-      socket.broadcast.emit('receiveOtherMessageEvent', otherMessage);
+      io.sockets.emit('receiveMessageEvent', message);
 
     });
 };
