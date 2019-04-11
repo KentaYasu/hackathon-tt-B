@@ -3,12 +3,12 @@
 // 投稿メッセージをサーバに送信する
 function publish() {
     // ユーザ名を取得
-    const userName = $('#userName'.val) ;
+    const userName = $('#userName').val();
     // 入力されたメッセージを取得
-    const message = $('#message'.val);
+    const message = $('#message').val();
     if(message !== ''){
     // 投稿内容を送信
-        socket.emit('publish',message);
+        socket.emit('publish', {userName: userName, message: message});
     }else{
         alert("空白では送信できません");
     }
