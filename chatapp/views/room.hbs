@@ -9,7 +9,7 @@
                 <input id="userName" type="hidden" value={{userName}}>
             </div>
             <div class="room-message">
-                <textarea id="message" rows="4" class="room-message_textarea" placeholder="投稿文を入力してください"></textarea>
+                <textarea id="message" rows="4" class="room-message_textarea" onkeypress="enterKeyPressed();" placeholder="投稿文を入力してください"></textarea>
             </div>
             <div class="room-submit">
                 <input type="button" value="投稿" class="btn btn-info" onclick="publish();">
