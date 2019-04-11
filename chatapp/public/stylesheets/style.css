@@ -3,7 +3,10 @@
  */
 body {
     font: 14px "Lucida Grande", Meiryo, Helvetica, Arial, sans-serif;
+    background-color: #FFCC99;
+    text-align: center;
 }
+
 
 a {
     color: #00B7FF;
@@ -17,6 +20,10 @@ div {
     margin: 20px;
 }
 
+.title {
+
+}
+
 /*
  * ボタンの共通設定
  */
@@ -27,8 +34,10 @@ div {
 /*
  * トップ画面（index.hbs）に関する設定
  */
-.index-user_name {
 
+
+.index-user_name {
+    background-color: red;
 }
 
 .index-user_name_text {
