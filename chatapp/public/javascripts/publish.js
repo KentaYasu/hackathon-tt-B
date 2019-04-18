@@ -5,7 +5,7 @@ let preResponceDate
 // 投稿メッセージをサーバに送信する
 function publish() {
     //１分間ボタンを押せなくする
-    disableButtonMinute();
+
 
     // ユーザ名を取得
     const userName = $('#userName').val();
@@ -15,6 +15,7 @@ function publish() {
     if(message.trim() !== ''){
         socket.emit('publish', {userName: userName, message: message});
         publishself();
+        disableButtonMinute();
     }else{
         alert("空白では送信できません");
     }
