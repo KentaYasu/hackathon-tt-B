@@ -10,15 +10,20 @@ module.exports = function (socket, io) {
       if (!data) {
         return false;
       }
-
       if (prePostUser === data.userName) {
         socket.emit('contPostError', '同じユーザが連続で投稿することはできません。');
         return false;
       }
       prePostUser = data.userName;
-
+      const time = new Date;
+      const year = time.getFullYear();
+      const month = ( '00' + (time.getMonth()+1) ).slice( -2 );
+      const date = ( '00' + time.getDate() ).slice( -2 );
+      const hour = ( '00' + time.getHours() ).slice( -2 );
+      const minute = ( '00' + time.getMinutes() ).slice( -2 );
+      const second = ( '00' + time.getSeconds() ).slice( -2 );
       // データを整形して渡す
-      const message = `${data.userName}さん：　${data.message}`;
+      const message = year+"/"+month+"/"+date+" "+hour+":"+minute+":"+second+"　　"+`${data.userName}さん： ${data.message}`;
 
       socket.broadcast.emit('receiveMessageEvent', message);
 
