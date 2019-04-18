@@ -15,7 +15,6 @@ function toThread(data) {
 // 投稿メッセージをサーバに送信する
 function publish() {
     //１分間ボタンを押せなくする
-    disableButtonMinute();
 
     // ユーザ名を取得
     const userName = $('#userName').val();
@@ -33,7 +32,6 @@ function publish() {
         alert("空白では送信できません");
     }
 
-    publishself();
 }
 
 //自分に太字で送信
@@ -42,8 +40,7 @@ function publishself() {
     const userName = $('#userName').val();
     // 入力されたメッセージを取得
     const message = $('#message').val();
-    // メモの内容を表示
-    toThread('<p><b>' + userName + 'さん: ' + message + '</b></p>');
+    toThread('<p><b>' + userName + 'さん: '+ message + '</b></p>');
 
     return false;
 }
@@ -77,7 +74,6 @@ socket.on('receiveMessageEvent', function (data) {
   toThread('<p>' + data + '</p>');
 });
 
-<<<<<<< Updated upstream
 //　サーバから連続投稿した際のエラーメッセージを受信する
 socket.on('contPostError', function (msg) {
   alert('<p>' + msg + '</p>');
@@ -99,9 +95,7 @@ function switchAscDesc() {
   }
 
   orderFlag = !orderFlag;
-=======
 function textboxEmpty(){
     const textbox = document.getElementById('message');
     textbox.value = '';
->>>>>>> Stashed changes
 }
