@@ -14,7 +14,7 @@ function toThread(data) {
 
 // 投稿メッセージをサーバに送信する
 function publish() {
-    //１分間ボタンを押せなくする
+
 
     // ユーザ名を取得
     const userName = $('#userName').val();
@@ -26,7 +26,9 @@ function publish() {
     if(message.trim() !== ''){
         socket.emit('publish', {userName: userName, message: message});
         publishself();
+        //1分間ボタンを押せなくする
         disableButtonMinute();
+        //textboxを空に
         textboxEmpty();
     }else{
         alert("空白では送信できません");
@@ -40,6 +42,7 @@ function publishself() {
     const userName = $('#userName').val();
     // 入力されたメッセージを取得
     const message = $('#message').val();
+    //日時取得
     const time = new Date;
     const year = time.getFullYear();
     const month = ( '00' + (time.getMonth()+1) ).slice( -2 );
