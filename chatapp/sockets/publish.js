@@ -26,6 +26,5 @@ module.exports = function (socket, io) {
       const message = year+"/"+month+"/"+date+" "+hour+":"+minute+":"+second+"　　"+`${data.userName}さん： ${data.message}`;
 
       socket.broadcast.emit('receiveMessageEvent', message);
-
-    });
+  });
 };
