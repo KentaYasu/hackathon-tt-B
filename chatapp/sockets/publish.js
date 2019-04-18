@@ -36,7 +36,7 @@ module.exports = function (socket, io) {
         const minute = ( '00' + time.getMinutes() ).slice( -2 );
         const second = ( '00' + time.getSeconds() ).slice( -2 );
         // データを整形して渡す
-        const message = year+"/"+month+"/"+date+" "+hour+":"+minute+":"+second+"　　"+`${data.userName}#${data.socketId}さんからのメッセージ： ${data.message}`;
+        const message = "<font color = \"red\">"+year+"/"+month+"/"+date+" "+hour+":"+minute+":"+second+"　　"+`${data.userName}#${data.socketId}さんからのメッセージ： ${data.message}`+"<font>";
 
         socket.to(data.directmessageName).emit('receiveMessageEvent', message);
       }
