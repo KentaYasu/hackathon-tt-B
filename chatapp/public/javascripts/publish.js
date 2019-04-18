@@ -3,6 +3,8 @@
 // 昇順降順が変わるたびに変わる
 let orderFlag = true;
 
+const ids = [];
+
 // #threadへの書き込みはここの関数を使ってください
 function toThread(data) {
   if (orderFlag){
@@ -14,8 +16,6 @@ function toThread(data) {
 
 // 投稿メッセージをサーバに送信する
 function publish() {
-
-
     // ユーザ名を取得
     const userName = $('#userName').val();
 
@@ -23,6 +23,7 @@ function publish() {
     const message = $('#message').val();
     const socketId = socket.id;
     // 投稿内容を送信
+
     if(message.trim() !== ''){
         socket.emit('publish', {userName: userName, message: message, socketId: socketId});
         publishself();
@@ -33,8 +34,8 @@ function publish() {
     }else{
         alert("空白では送信できません");
     }
-
-}
+    return false;
+  }
 
 //自分に太字で送信
 function publishself() {
@@ -93,6 +94,13 @@ function directmessageself() {
     const minute = ( '00' + time.getMinutes() ).slice( -2 );
     const second = ( '00' + time.getSeconds() ).slice( -2 );
     toThread('<p>'+year+"/"+month+"/"+date+" "+hour+":"+minute+":"+second+"　　"+'<b>' + userName +'#'+socketId+ 'さんから'+directmessageName+'さんへのメッセージ: '+ message + '</b></p>');
+    // uniqueなIDを指定
+    const id = generateId();
+
+    // メモの内容を表示
+    toThread(`<p id=${id}><b>` + userName + 'さん: ' + message + `</b> \
+    <input type="button" value="編集" onclick="edit(${id})" /> \
+    <input type="button" value="削除" onclick="remove(${id})" /></p>`);
 
     return false;
 }
@@ -107,6 +115,17 @@ function enterKeyPressed() {
     }
 
     publish();
+  }
+}
+
+function generateId(){
+  // 0 ~ 10000のランダムな整数を作成
+  const id =  Math.floor( Math.random() * 10000 );
+  if (ids.indexOf(id) !== -1) {
+    return genUniqueId();
+  } else {
+    ids.push(id);
+    return id;
   }
 }
 
@@ -149,7 +168,21 @@ function switchAscDesc() {
   orderFlag = !orderFlag;
 }
 
+<<<<<<< Updated upstream
 function textboxEmpty(){
     const textbox = document.getElementById('message');
     textbox.value = '';
+=======
+//指定IDのコメントを編集
+function edit(id) {
+  const data = $(`#${id} b`).text();
+  const tmp = data.split(' ');
+  const msg = prompt('編集後の内容を入力してください。');
+  $(`#${id} b`).text(tmp[0] + ' ' + msg);
+}
+
+// 指定IDのコメントを削除
+function remove(id) {
+  $(`#${id}`).remove();
+>>>>>>> Stashed changes
 }
