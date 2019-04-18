@@ -40,7 +40,14 @@ function publishself() {
     const userName = $('#userName').val();
     // 入力されたメッセージを取得
     const message = $('#message').val();
-    toThread('<p><b>' + userName + 'さん: '+ message + '</b></p>');
+    const time = new Date;
+    const year = time.getFullYear();
+    const month = ( '00' + (time.getMonth()+1) ).slice( -2 );
+    const date = ( '00' + time.getDate() ).slice( -2 );
+    const hour = ( '00' + time.getHours() ).slice( -2 );
+    const minute = ( '00' + time.getMinutes() ).slice( -2 );
+    const second = ( '00' + time.getSeconds() ).slice( -2 );
+    toThread('<p>'+year+"/"+month+"/"+date+" "+hour+":"+minute+":"+second+"　　"+'<b>' + userName + 'さん: '+ message + '</b></p>');
 
     return false;
 }
