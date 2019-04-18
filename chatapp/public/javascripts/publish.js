@@ -23,7 +23,7 @@ function publish() {
     const message = $('#message').val();
 
     // 投稿内容を送信
-    if(message !== ''){
+    if(message.trim() !== ''){
         socket.emit('publish', {userName: userName, message: message});
         publishself();
         disableButtonMinute();
@@ -95,6 +95,8 @@ function switchAscDesc() {
   }
 
   orderFlag = !orderFlag;
+}
+
 function textboxEmpty(){
     const textbox = document.getElementById('message');
     textbox.value = '';
