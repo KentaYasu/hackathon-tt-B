@@ -26,6 +26,9 @@ function publish() {
     // 投稿内容を送信
     if(message !== ''){
         socket.emit('publish', {userName: userName, message: message});
+        publishself();
+        disableButtonMinute();
+        textboxEmpty();
     }else{
         alert("空白では送信できません");
     }
@@ -74,6 +77,7 @@ socket.on('receiveMessageEvent', function (data) {
   toThread('<p>' + data + '</p>');
 });
 
+<<<<<<< Updated upstream
 //　サーバから連続投稿した際のエラーメッセージを受信する
 socket.on('contPostError', function (msg) {
   alert('<p>' + msg + '</p>');
@@ -95,4 +99,9 @@ function switchAscDesc() {
   }
 
   orderFlag = !orderFlag;
+=======
+function textboxEmpty(){
+    const textbox = document.getElementById('message');
+    textbox.value = '';
+>>>>>>> Stashed changes
 }
