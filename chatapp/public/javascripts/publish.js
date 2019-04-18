@@ -21,10 +21,10 @@ function publish() {
 
     // 入力されたメッセージを取得
     const message = $('#message').val();
-
+    const socketId = socket.id;
     // 投稿内容を送信
     if(message.trim() !== ''){
-        socket.emit('publish', {userName: userName, message: message});
+        socket.emit('publish', {userName: userName, message: message, socketId: socketId});
         publishself();
         //1分間ボタンを押せなくする
         disableButtonMinute();
@@ -43,6 +43,7 @@ function publishself() {
     // 入力されたメッセージを取得
     const message = $('#message').val();
     //日時取得
+    const socketId = socket.id;
     const time = new Date;
     const year = time.getFullYear();
     const month = ( '00' + (time.getMonth()+1) ).slice( -2 );
@@ -50,7 +51,48 @@ function publishself() {
     const hour = ( '00' + time.getHours() ).slice( -2 );
     const minute = ( '00' + time.getMinutes() ).slice( -2 );
     const second = ( '00' + time.getSeconds() ).slice( -2 );
-    toThread('<p>'+year+"/"+month+"/"+date+" "+hour+":"+minute+":"+second+"　　"+'<b>' + userName + 'さん: '+ message + '</b></p>');
+    toThread('<p>'+year+"/"+month+"/"+date+" "+hour+":"+minute+":"+second+"　　"+'<b>' + userName +'#'+socketId+ 'さん: '+ message + '</b></p>');
+
+    return false;
+}
+
+function directmessage() {
+
+
+    // ユーザ名を取得
+    const userName = $('#userName').val();
+
+    // 入力されたメッセージを取得
+    const message = $('#message').val();
+    const directmessageName = $('#directmessageName').val();
+    const socketId = socket.id;
+    // 投稿内容を送信
+    if(message.trim() !== ''){
+        socket.emit('publish', {userName: userName, message: message, socketId: socketId, directmessageName: directmessageName});
+        directmessageself();
+        //textboxを空に
+        textboxEmpty();
+    }else{
+        alert("空白では送信できません");
+    }
+}
+
+function directmessageself() {
+    // ユーザ名を取得
+    const userName = $('#userName').val();
+    // 入力されたメッセージを取得
+    const message = $('#message').val();
+    //日時取得
+    const directmessageName = $('#directmessageName').val();
+    const socketId = socket.id;
+    const time = new Date;
+    const year = time.getFullYear();
+    const month = ( '00' + (time.getMonth()+1) ).slice( -2 );
+    const date = ( '00' + time.getDate() ).slice( -2 );
+    const hour = ( '00' + time.getHours() ).slice( -2 );
+    const minute = ( '00' + time.getMinutes() ).slice( -2 );
+    const second = ( '00' + time.getSeconds() ).slice( -2 );
+    toThread('<p>'+year+"/"+month+"/"+date+" "+hour+":"+minute+":"+second+"　　"+'<b>' + userName +'#'+socketId+ 'さんから'+directmessageName+'さんへのメッセージ: '+ message + '</b></p>');
 
     return false;
 }

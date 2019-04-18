@@ -4,25 +4,22 @@
     </div>
     <div class="row">
         <form method="post" action="/">
-          <button type="button" onclick="switchAscDesc()">changeOrder</button>
             <div class="room-login_user">
                 ログインユーザ：{{userName}}さん
                 <input id="userName" type="hidden" value={{userName}}>
             </div>
-            <!--
+
             <div class="directmessageName">
-                <textarea id="directmessageName" rows="1" class="directmessage_Namearea" placeholder="DMを送る場合は相手を入力して下さい"></textarea>
+                <textarea id="directmessageName" rows="1" class="directmessage_Namearea" placeholder="DMを送る場合は相手の#以下を入力して下さい"></textarea>
             </div>
-          -->
+
             <div class="room-message">
                 <textarea id="message" rows="4" class="room-message_textarea" onkeypress="enterKeyPressed();" placeholder="投稿文を入力してください"></textarea>
             </div>
             <div class="room-submit">
                 <input id="publish-btn" type="button" value="投稿" class="btn btn-info" onclick="publish();">
                 <input type="button" value="メモ" class="btn btn-info" onclick="memo();">
-                <!--
                 <input type="button" value="DM送信" class="btn btn-info" onclick="directmessage();">
-              -->
             </div>
             <!-- #thread内に投稿されたメッセージを表示する -->
             <div class="room-thread">
