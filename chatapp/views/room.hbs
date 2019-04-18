@@ -1,6 +1,9 @@
 <div class="container">
-    <div class="row">
-        <h1>Node Chat チャットルーム</h1>
+
+    <div class="row-title">
+        <h1 class="title">Node Chat</h1>
+        <p><h2 class="room-title">チャットルーム</h2></p>
+
     </div>
     <div class="row">
         <form method="post" action="/">
@@ -18,9 +21,10 @@
                 <textarea id="message" rows="4" class="room-message_textarea" onkeypress="enterKeyPressed();" placeholder="投稿文を入力してください"></textarea>
             </div>
             <div class="room-submit">
-                <input id="publish-btn" type="button" value="投稿" class="btn btn-info" onclick="publish();">
-                <input type="button" value="メモ" class="btn btn-info" onclick="memo();">
+                <input id="publish-btn" type="button" value="投稿" class="btn btn-warning" onclick="publish();">
+                <input type="button" value="メモ" class="btn btn-warning" onclick="memo();">
                 <input type="button" value="DM送信" class="btn btn-info" onclick="directmessage();">
+
             </div>
             <!-- #thread内に投稿されたメッセージを表示する -->
             <div class="room-thread">
@@ -28,7 +32,7 @@
                 </div>
             </div>
             <div class="room-exit">
-                <input type="button" value="退室する" class="btn btn-info" onclick="exit();">
+                <input type="button" value="退室する" class="btn btn-warning" onclick="exit();">
             </div>
         </form>
     </div>

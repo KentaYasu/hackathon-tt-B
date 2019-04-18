@@ -3,32 +3,59 @@
  */
 body {
     font: 14px "Lucida Grande", Meiryo, Helvetica, Arial, sans-serif;
-    background-color: #FFCC99;
+    background-color: navajowhite;
+    position: relative;
+}
+
+h1{
+    color: coral;
+    font-size:80px;
+
+}
+
+h2{
+  text-align: center;
+  font-size: 40px;
+  color: coral;
+}
+
+p{
     text-align: center;
 }
 
-
 a {
-    color: #00B7FF;
+
 }
 
-div {
-    margin: 20px 0px;
-}
 
-.row {
-    margin: 20px;
-}
+
+
+
+
+.row{
+      width: 1000px;
+      padding: 0.5em 1em;
+      margin: 2em 0;
+      font-weight: bold;
+      color: orange;/*文字色*/
+      background: #FFF;
+      border: solid 3px coral;/*線*/
+      border-radius: 10px;/*角の丸み*/
+  }
+  .row p {
+      margin: 0;
+      padding: 0;
+  }
 
 .title {
-
+    text-align: center;
 }
 
 /*
  * ボタンの共通設定
  */
 .common-button {
-
+  margin: 10px
 }
 
 /*
@@ -37,16 +64,17 @@ div {
 
 
 .index-user_name {
-    background-color: red;
 }
 
 .index-user_name_text {
     width: 200px;
+    border: solid 0.8px grey;
+    margin-bottom: 10px;
+
 }
 
-.index-enter {
 
-}
+
 
 .index-enter_button {
 
@@ -81,10 +109,12 @@ div {
 
 .room-thread {
 
+
 }
 
 .room-exit {
-
+  margin-top: 5px;
+  text-align: right;
 }
 
 .room-exit_button {
