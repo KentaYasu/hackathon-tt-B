@@ -22,11 +22,16 @@ function publish() {
     // 入力されたメッセージを取得
     const message = $('#message').val();
     const socketId = socket.id;
+
+    //　メッセージIDの生成
+    const messageId = generateId();
+
     // 投稿内容を送信
 
     if(message.trim() !== ''){
-        socket.emit('publish', {userName: userName, message: message, socketId: socketId});
-        publishself();
+        socket.emit('publish', {userName: userName, message: message, socketId: socketId, messageId: messageId});
+        //messageIDを各ページで共有する
+        publishself(messageId);
         //1分間ボタンを押せなくする
         disableButtonMinute();
         //textboxを空に
@@ -38,7 +43,7 @@ function publish() {
   }
 
 //自分に太字で送信
-function publishself() {
+function publishself(id) {
     // ユーザ名を取得
     const userName = $('#userName').val();
     // 入力されたメッセージを取得
@@ -52,14 +57,19 @@ function publishself() {
     const hour = ( '00' + time.getHours() ).slice( -2 );
     const minute = ( '00' + time.getMinutes() ).slice( -2 );
     const second = ( '00' + time.getSeconds() ).slice( -2 );
-    toThread('<p>'+year+"/"+month+"/"+date+" "+hour+":"+minute+":"+second+"　　"+'<b>' + userName +'#'+socketId+ 'さん: '+ message + '</b></p>');
+
+    // 日付部分
+    const datePart = year + "/" + month + "/" + date + " " + hour + ":" + minute + ":" + second + "　　";
+
+    //pタグのidに埋め込む
+    toThread(`<p id=${id}>` + datePart + '<b>' + userName + '#' + socketId + 'さん: ' + message + '</b>' +
+      `<input type="button" value="編集" onclick="editSelf(${id})" /> <input type="button" value="削除" onclick="removeSelf(${id})" /></p>`
+    );
 
     return false;
 }
 
 function directmessage() {
-
-
     // ユーザ名を取得
     const userName = $('#userName').val();
 
@@ -93,17 +103,14 @@ function directmessageself() {
     const hour = ( '00' + time.getHours() ).slice( -2 );
     const minute = ( '00' + time.getMinutes() ).slice( -2 );
     const second = ( '00' + time.getSeconds() ).slice( -2 );
-    toThread('<p>'+year+"/"+month+"/"+date+" "+hour+":"+minute+":"+second+"　　"+'<b>' + userName +'#'+socketId+ 'さんから'+directmessageName+'さんへのメッセージ: '+ message + '</b></p>');
-    // uniqueなIDを指定
-    const id = generateId();
 
-    // メモの内容を表示
-    toThread(`<p id=${id}><b>` + userName + 'さん: ' + message + `</b> \
-    <input type="button" value="編集" onclick="edit(${id})" /> \
-    <input type="button" value="削除" onclick="remove(${id})" /></p>`);
+    // 日付部分
+    const datePart = year + "/" + month + "/" + date + " " + hour + ":" + minute + ":" + second + "　　";
 
-    return false;
+    toThread(`<p>` + datePart　+'<b>' + userName +'#'+socketId+ 'さんから'+directmessageName+'さんへのメッセージ: '+ message + '</b></p>');
 }
+
+
 
 function enterKeyPressed() {
   // keycode13はエンターキー
@@ -115,6 +122,9 @@ function enterKeyPressed() {
     }
 
     publish();
+
+    //textboxを空に
+    textboxEmpty();
   }
 }
 
@@ -122,7 +132,7 @@ function generateId(){
   // 0 ~ 10000のランダムな整数を作成
   const id =  Math.floor( Math.random() * 10000 );
   if (ids.indexOf(id) !== -1) {
-    return genUniqueId();
+    return generateId();
   } else {
     ids.push(id);
     return id;
@@ -142,8 +152,16 @@ function disableButtonMinute(){
 // サーバから受信した投稿メッセージを画面上に表示する
 socket.on('receiveMessageEvent', function (data) {
   //　ascがtrueなら#threadの上、falseなら下側にメッセージを追加していく
-  toThread('<p>' + data + '</p>');
+  toThread(`<p id=${data.id}>` + data.msg + '</p>');
 });
+
+socket.on('otherRemoveEvent', id => {
+    removeComment(id);
+})
+
+socket.on('otherEditEvent', data => {
+    editOtherComment(data.id, data.msg);
+})
 
 //　サーバから連続投稿した際のエラーメッセージを受信する
 socket.on('contPostError', function (msg) {
@@ -168,21 +186,43 @@ function switchAscDesc() {
   orderFlag = !orderFlag;
 }
 
-<<<<<<< Updated upstream
+
 function textboxEmpty(){
     const textbox = document.getElementById('message');
     textbox.value = '';
-=======
+}
+
+function editSelf(id) {
+  const msg = prompt('編集後の内容を入力してください');
+  socket.emit('editEvent', {id: id, msg: msg});
+  editMyComment(id, msg);
+}
+
+function removeSelf(id) {
+  socket.emit('removeEvent', id);
+  removeComment(id);
+}
+
 //指定IDのコメントを編集
-function edit(id) {
-  const data = $(`#${id} b`).text();
-  const tmp = data.split(' ');
-  const msg = prompt('編集後の内容を入力してください。');
-  $(`#${id} b`).text(tmp[0] + ' ' + msg);
+function editMyComment(id, msg) {
+  if (!msg) {
+    return false;
+  }
+  const comment = $(`#${id} b`).text();
+  const data = comment.split(' ');
+  $(`#${id} b`).text(data.slice(0, -1) + ' ' + msg);
+}
+
+function editOtherComment(id, msg) {
+  if(!msg) {
+    return false;
+  }
+  const comment = $(`#${id}`).text();
+  const data = comment.split(' ');
+  $(`#${id}`).text(data.slice(0, -1) + ' ' + msg);
 }
 
 // 指定IDのコメントを削除
-function remove(id) {
+function removeComment(id) {
   $(`#${id}`).remove();
->>>>>>> Stashed changes
 }
