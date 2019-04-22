@@ -5,6 +5,7 @@ body {
     font: 14px "Lucida Grande", Meiryo, Helvetica, Arial, sans-serif;
     background-color: navajowhite;
     position: relative;
+    margin: auto;
 }
 
 h1{
